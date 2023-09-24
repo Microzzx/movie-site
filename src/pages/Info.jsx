@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import Loading from "../components/Loading";
 import { AiFillStar } from "react-icons/ai";
 import cartSlice, { addCart } from "../redux/cartSlice";
+import { img404 } from "../assets";
 
 const Info = () => {
   const { movieId } = useParams();
@@ -40,7 +41,11 @@ const Info = () => {
     <div className="flex max-[640px]:flex-col max-[640px]:mt-[20vh] w-full gap-14 items-center justify-center">
       <div>
         <img
-          src={`https://image.tmdb.org/t/p/w500${movieData.poster_path}`}
+          src={
+            movieData.poster_path
+              ? `https://image.tmdb.org/t/p/w500${movieData.poster_path}`
+              : img404
+          }
           alt="movie_img"
           className="object-cover h-100 w-50 max-[640px]:h-60 animate-slideleft"
         />

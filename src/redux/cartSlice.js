@@ -34,15 +34,9 @@ const cartSlice = createSlice({
       }
     },
 
-    clearCart: (state, action) => {
-      if (state.currentSongs[action.payload]?.track) {
-        state.activeSong = state.currentSongs[action.payload]?.track;
-      } else {
-        state.activeSong = state.currentSongs[action.payload];
-      }
-
-      state.currentIndex = action.payload;
-      state.isActive = true;
+    clearCart: (state) => {
+      state.currentCart = [];
+      localStorage.removeItem("CART_DATA");
     },
   },
 });

@@ -5,7 +5,6 @@ import SearchBox from "./SearchBox";
 import { BsFillCartFill } from "react-icons/bs";
 const TopBar = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const currentCart = useSelector((state) => state.cart.currentCart);
 
   const handleLogoClick = () => {
@@ -25,12 +24,12 @@ const TopBar = () => {
             handleLogoClick();
           }}
         >
-          Boyz Movie
+          My Movie App
         </h1>
         <SearchBox />
         <div className="flex flex-1 ">
           <BsFillCartFill
-            color={currentCart.length > 1 ? "#FED900" : "white"}
+            color={currentCart.length > 0 ? "#FED900" : "white"}
             size={20}
             onClick={() => {
               handleCartClick();

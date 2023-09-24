@@ -2,10 +2,14 @@ import React from "react";
 import { BsCart4 } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import PaymentCard from "../components/PaymentCard";
-
+import { clearCart } from "../redux/cartSlice";
 const Payment = () => {
   const dispatch = useDispatch();
   const currentCart = useSelector((state) => state.cart.currentCart);
+
+  const handleClick = () => {
+    dispatch(clearCart());
+  };
 
   const Total = (currentCart) => {
     const totalPrice = currentCart.reduce((total, item) => {
@@ -22,10 +26,12 @@ const Payment = () => {
       return 0.1;
     } else if (totalQuantity > 5) {
       return 0.2;
+    } else {
+      return 0;
     }
   };
 
-  const totalPrice = Total(currentCart);
+  const totalPrice = Total(currentCart).toFixed(2);
   const discount = Discount(currentCart);
   const discountPercentage = (discount * 100).toString();
   const discountTotal = (totalPrice * discount).toFixed(2);
@@ -66,6 +72,19 @@ const Payment = () => {
                 {estimateTotal} baht
               </h3>
             </div>
+          </div>
+          <div className="flex mt-10 gap-10">
+            <button
+              onClick={() => {
+                handleClick();
+              }}
+              className="bg-transparent hover:bg-[#FED900] text-[#FED900] font-semibold hover:text-black py-2 px-4 border border-[#FED900] hover:border-transparent rounded mt-10"
+            >
+              Clear all
+            </button>
+            <button className="bg-transparent hover:bg-[#FED900] text-[#FED900] font-semibold hover:text-black py-2 px-4 border border-[#FED900] hover:border-transparent rounded mt-10">
+              Checkout
+            </button>
           </div>
         </div>
       </div>
