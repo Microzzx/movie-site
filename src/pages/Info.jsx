@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import Loading from "../components/Loading";
-import AiFillStar from "react-icons/ai";
+import { AiFillStar } from "react-icons/ai";
 const Info = () => {
   const { movieId } = useParams();
   const [movieData, setMovieData] = useState({});
@@ -34,19 +34,28 @@ const Info = () => {
         <img
           src={`https://image.tmdb.org/t/p/w500${movieData.poster_path}`}
           alt="movie_img"
-          className="object-cover h-100 w-50 "
+          className="object-cover h-100 w-50 animate-slideleft"
         />
       </div>
 
-      <div className="flex flex-col gap-5 w-[50vw] ">
+      <div className="flex flex-col gap-5 w-[50vw] animate-slideleft2">
         <h2 className="text-3xl font-bold text-white">{movieData.title}</h2>
-        <AiFillStar />
+        <div className="flex items-center gap-2">
+          <AiFillStar color="#FED900" />
+          <p className="text-xl font-medium text-[#FED900]">
+            {movieData.vote_average.toFixed(2)}
+          </p>
+        </div>
+
         <p className="text-xl font-medium text-gray-300">
           Genres: {movieData.genres.map((genre) => genre.name).join(", ")}
         </p>
-        <p className="text-xl font-medium text-gray-300">
+        <p className="text-xl font-medium text-gray-300/50">
           {movieData.overview}
         </p>
+        <button className="bg-transparent hover:bg-[#FED900] text-[#FED900] font-semibold hover:text-black py-2 px-4 border border-[#FED900] hover:border-transparent rounded mt-10">
+          Add to cart
+        </button>
       </div>
     </div>
   );
