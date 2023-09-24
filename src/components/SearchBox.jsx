@@ -1,10 +1,17 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { FiSearch } from "react-icons/fi";
 
 const SearchBox = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const navigate = useNavigate();
+
+  const handleSubmit = () => {
+    navigate(`/search/${searchTerm}`);
+  };
   return (
     <form
+      onSubmit={handleSubmit}
       autoComplete="off"
       className="p-2 text-gray-600 focus-within:text-gray-400"
     >
