@@ -1,0 +1,50 @@
+import { createSlice } from "@reduxjs/toolkit";
+
+const initialState = {
+  currentCart: JSON.parse(localStorage.getItem("CART_DATA")) || [],
+};
+
+const cartSlice = createSlice({
+  name: "cart",
+  initialState,
+  reducers: {
+    addCart: (state, action) => {
+      const { id, title, poster_path } = action.payload;
+      const newItem = { id, title, poster_path, price: 399, quantity: 1 };
+      const existingItem = state.currentCart.find((item) => item.id === id);
+      if (existingItem) {
+        existingItem.quantity += 1;
+        existingItem.total = existingItem.quantity * existingItem.price;
+      } else {
+        newItem.total = newItem.quantity * newItem.price;
+        state.currentCart.push(newItem);
+      }
+      localStorage.setItem("CART_DATA", JSON.stringify(state.currentCart));
+    },
+
+    deleteCart: (state, action) => {
+      if (state.currentSongs[action.payload]?.track) {
+        state.activeSong = state.currentSongs[action.payload]?.track;
+      } else {
+        state.activeSong = state.currentSongs[action.payload];
+      }
+
+      state.currentIndex = action.payload;
+      state.isActive = true;
+    },
+
+    clearCart: (state, action) => {
+      if (state.currentSongs[action.payload]?.track) {
+        state.activeSong = state.currentSongs[action.payload]?.track;
+      } else {
+        state.activeSong = state.currentSongs[action.payload];
+      }
+
+      state.currentIndex = action.payload;
+      state.isActive = true;
+    },
+  },
+});
+
+export const { addCart, deleteCart, clearCart } = cartSlice.actions;
+export default cartSlice.reducer;

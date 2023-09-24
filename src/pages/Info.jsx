@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import Loading from "../components/Loading";
 import { AiFillStar } from "react-icons/ai";
+import cartSlice, { addCart } from "../redux/cartSlice";
+
 const Info = () => {
   const { movieId } = useParams();
   const [movieData, setMovieData] = useState({});
   const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
+  const currentCart = useSelector((state) => state.cart.currentCart);
 
   useEffect(() => {
     axios
@@ -15,6 +20,7 @@ const Info = () => {
       )
       .then((response) => {
         setMovieData(response.data);
+        console.log(response.data);
         setLoading(false);
       })
       .catch((error) => {
@@ -22,19 +28,21 @@ const Info = () => {
       });
   }, []);
 
-  console.log(movieData);
+  const handleClick = () => {
+    dispatch(addCart(movieData));
+  };
 
   if (loading) {
     return <Loading />;
   }
 
   return (
-    <div className="flex w-full gap-14 ">
+    <div className="flex max-[640px]:flex-col max-[640px]:mt-[20vh] w-full gap-14 items-center justify-center">
       <div>
         <img
           src={`https://image.tmdb.org/t/p/w500${movieData.poster_path}`}
           alt="movie_img"
-          className="object-cover h-100 w-50 animate-slideleft"
+          className="object-cover h-100 w-50 max-[640px]:h-60 animate-slideleft"
         />
       </div>
 
@@ -53,7 +61,12 @@ const Info = () => {
         <p className="text-xl font-medium text-gray-300/50">
           {movieData.overview}
         </p>
-        <button className="bg-transparent hover:bg-[#FED900] text-[#FED900] font-semibold hover:text-black py-2 px-4 border border-[#FED900] hover:border-transparent rounded mt-10">
+        <button
+          onClick={() => {
+            handleClick();
+          }}
+          className="bg-transparent hover:bg-[#FED900] text-[#FED900] font-semibold hover:text-black py-2 px-4 border border-[#FED900] hover:border-transparent rounded mt-10"
+        >
           Add to cart
         </button>
       </div>
