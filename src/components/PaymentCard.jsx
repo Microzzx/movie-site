@@ -1,11 +1,23 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { deleteCart } from "../redux/cartSlice";
+import { img404 } from "../assets";
+import { BsFillTrash3Fill } from "react-icons/bs";
 
 const PaymentCard = ({ item }) => {
+  const dispatch = useDispatch();
+  const handleClick = () => {
+    dispatch(deleteCart(item));
+  };
   return (
     <div className="flex p-5 m-5 rounded-lg items-center gap-5 bg-[#292929] border-2 border-[#FED900]">
       <div>
         <img
-          src={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
+          src={
+            item.poster_path
+              ? `https://image.tmdb.org/t/p/w500${item.poster_path}`
+              : img404
+          }
           className="object-cover h-52 max-[640px]:h-60"
         />
       </div>
@@ -32,6 +44,12 @@ const PaymentCard = ({ item }) => {
           <p className="text-lg font-normal text-white">{item.total} Baht</p>
         </div>
       </div>
+
+      <BsFillTrash3Fill
+        color="#FED900"
+        size={30}
+        onClick={() => handleClick()}
+      />
     </div>
   );
 };

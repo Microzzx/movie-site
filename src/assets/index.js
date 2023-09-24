@@ -1,3 +1,3 @@
 import loading from "./loading.svg";
-
-export { loading };
+import img404 from "./404.jpg";
+export { loading, img404 };

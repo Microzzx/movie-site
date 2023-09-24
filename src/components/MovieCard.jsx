@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { img404 } from "../assets";
 
 const MovieCard = ({ id, data }) => {
   const navigate = useNavigate();
@@ -16,9 +17,13 @@ const MovieCard = ({ id, data }) => {
       }}
     >
       <img
-        src={`https://image.tmdb.org/t/p/w500${
+        src={
           data.poster_path || data.backdrop_path
-        }`}
+            ? `https://image.tmdb.org/t/p/w500${
+                data.poster_path || data.backdrop_path
+              }`
+            : img404
+        }
         alt="poster_image"
       />
       <h1 className="text-xl text-white font-bold text-center truncate">

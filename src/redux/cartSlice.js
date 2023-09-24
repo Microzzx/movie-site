@@ -23,14 +23,15 @@ const cartSlice = createSlice({
     },
 
     deleteCart: (state, action) => {
-      if (state.currentSongs[action.payload]?.track) {
-        state.activeSong = state.currentSongs[action.payload]?.track;
-      } else {
-        state.activeSong = state.currentSongs[action.payload];
-      }
+      const idToDelete = action.payload.id;
+      const indexToDelete = state.currentCart.findIndex(
+        (item) => item.id === idToDelete
+      );
 
-      state.currentIndex = action.payload;
-      state.isActive = true;
+      if (indexToDelete !== -1) {
+        state.currentCart.splice(indexToDelete, 1);
+        localStorage.setItem("CART_DATA", JSON.stringify(state.currentCart));
+      }
     },
 
     clearCart: (state, action) => {

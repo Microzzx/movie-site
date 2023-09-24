@@ -1,9 +1,12 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import SearchBox from "./SearchBox";
 import { BsFillCartFill } from "react-icons/bs";
 const TopBar = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const currentCart = useSelector((state) => state.cart.currentCart);
 
   const handleLogoClick = () => {
     navigate("/");
@@ -27,7 +30,7 @@ const TopBar = () => {
         <SearchBox />
         <div className="flex flex-1 ">
           <BsFillCartFill
-            color="white"
+            color={currentCart.length > 1 ? "#FED900" : "white"}
             size={20}
             onClick={() => {
               handleCartClick();
